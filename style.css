@@ -1,0 +1,87 @@
+body{
+    font-size: 18px;
+    font-family: 'Rambla', sans-serif;
+    margin: 0px;
+	padding: 0px;
+
+
+}
+div, p, input, button, form, span, a, ul, li {
+	box-sizing: border-box;
+}
+
+header{
+    font-size: 15px;
+    font-family: 'Rowdies', cursive;
+    background: url('img/head.png') repeat-x center;
+    height: 140px;
+    margin-bottom: 50px;
+}
+
+.menu{
+    display: inline-block;
+    width: 98.5%;
+    margin: 10px;
+    height: 120px;
+    background: rgba(201, 195, 195, 0.57);
+    padding-top: 25px;
+    padding-left: 25px;
+    
+
+}
+
+.logo{
+    background: #C4C4C4;
+    color: black;
+    text-decoration-line: none;
+    border: #5C5C5C solid 1px;
+    margin-right: 25px;
+    border-radius: 20px;
+    padding: 10px 15px;
+}
+
+.regDiv{
+    margin-top: -20px;
+    text-align: right;
+}
+
+.reg{
+    padding: 10px 20px;
+}
+
+.base{
+    width: 1050px;	
+	margin:auto;
+}
+.base p{
+    margin: 0px 50px;
+}
+p{
+    text-indent: 25px;
+    line-height: 35px;
+}
+
+.baseCenter{
+    display: flex;
+	justify-content: space-between;
+    margin: 50px 75px;
+}
+.baseCenter p{
+    width: 400px;
+
+}
+.books{
+    width: 35vmin;
+}
+
+
+button{
+    display: block;
+    margin: auto;
+    padding: 10px 15px;
+    font-size: 16px;
+    background: rgba(201, 195, 195, 0,57);
+    margin-top: 30px;
+
+
+}
