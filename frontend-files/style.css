@@ -127,9 +127,51 @@ header{
 }
 
 
+/* Lists */
+
+.grid{
+    display: grid;
+    grid-template-columns: 0.75fr 1fr 2fr;
+    grid-column-gap: 20px;
+    margin-bottom: 20px;
+}
+.grid div{
+   background-color: #C4C4C4;
+   padding-left: 20px;
+   max-height: 400px;
+   overflow: auto;
+}
+
+.listbutton{
+    font-family: 'Rowdies', cursive;
+    font-size: 15px;
+    margin-left: 20px;
+    background: #C4C4C4;
+    padding:  10px 10px;
+    border: none;
+    float: right;
+}
+
+.editField{
+    height: 100px;
+    
+}
+.editField{
+    padding: 10px 15px;
+    background: #C4C4C4;
+    color: black;
+    border: none;
+    outline:none;
+    font-family: 'Rambla';
+    font-size: 18px;
+    resize: none;
+    vertical-align: top;
+}
 
 
-
+.editField input::placeholder{
+    color: black;
+}
 
 
 
