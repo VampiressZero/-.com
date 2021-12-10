@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="base"> 
+        <p class="baseP">               
+            Основная функция сайта помощь в обучении и заучивнии материала по средством списков и возможности проверять свои знания при помощи их самостоятельно в удобной для Вас форме. 
+        </p>
+
+        <div class="baseCenter">
+            <div>
+                <p class="baseP"> 
+                    Часто не удобно иметь большое количество физических флеш-карт наш продут призван это исправить.
+                </p>
+                <p class="baseP">
+                    Для удобства и возможности учиться в любое удобное время мы  создали оффлайн версию.
+                </p>
+                <button class="buttonDownload">Скачать приложение</button>
+            </div>
+            <img class="books" src="{% static 'img/books.png' %}" alt="Picture books">
+        </div>
+    </div>
+{% endblock content %}
