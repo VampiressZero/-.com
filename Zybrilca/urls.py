@@ -20,5 +20,7 @@ from Zybrilca_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index_url"),
-    path('reg/', views.reg, name="registration_url"),
+    path('reg/', views.reg, name="reg_url"),
+    path('login', views.login_, name="login_url"),
+    path('logout', views.logout_, name="logout_url"),
 ]
