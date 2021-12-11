@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from .models import *
@@ -57,3 +57,9 @@ def login_(request):
 def logout_(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+
+@csrf_exempt
+def show_dictionaries(request):
+    list_dictionaries = Dictionary.objects.all()
+    return HttpResponse(list_dictionaries[0].text_pairs)
