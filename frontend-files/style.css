@@ -152,10 +152,7 @@ header{
     float: right;
 }
 
-.editField{
-    height: 100px;
-    
-}
+
 .editField{
     padding: 10px 15px;
     background: #C4C4C4;
@@ -166,6 +163,7 @@ header{
     font-size: 18px;
     resize: none;
     vertical-align: top;
+    height: 100px;
 }
 
 
@@ -174,16 +172,71 @@ header{
 }
 
 
+/* Cards */
+
+.testcontent{
+    background: #5C5C5C;
+    max-height: 500px;
+    width: 100%;
+    padding: 15px;
+    overflow: auto;
+    
+}
+.testcontent p{
+    color: white;
+    font-family: 'Rambla';
+}
+
+.true{
+    color: #29FF06;
+}
+
+.false{
+    color: #FF3D00;
+}
+
+.testcontent div{
+    width: 180px;
+    text-align: center;
+}
 
 
+.wordTranslation{
+    padding-top: 10px;
+    padding-left: 15px;
+    font-size: 20px;
+}
 
 
+.enterWord{
+    display: grid;
+    grid-template-columns: 10fr 2fr;
+    margin-top: 20px;
 
+}
 
+.enterWord textarea{
+    
+    padding: 10px 15px;
+    background: #C4C4C4;
+    color: black;
+    border: none;
+    outline:none;
+    font-family: 'Rambla';
+    font-size: 18px;
+    resize: none;
+    height: 25px;
+}
 
+.enterWord button{
+    border: 1px solid black;
+    background: #C4C4C4;
+    font-family: 'Rambla';
+    font-size: 18px;
 
+    
 
-
+}
 
 
 
