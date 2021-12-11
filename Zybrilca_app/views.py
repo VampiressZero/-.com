@@ -10,6 +10,7 @@ from .models import *
 def index(request):
     return render(request, 'index.html')
 
+
 @csrf_exempt
 def reg(request):
     if request.method == "POST":
@@ -32,6 +33,7 @@ def reg(request):
         return render(request, 'reg.html', locals())
     return render(request, 'reg.html', locals())
 
+
 @csrf_exempt
 def login_(request):
     if request.user.is_authenticated:
@@ -49,6 +51,7 @@ def login_(request):
     else:
         error = "Неверный логин или пароль"
         return render(request, 'index.html', locals())
+
 
 @csrf_exempt
 def logout_(request):
