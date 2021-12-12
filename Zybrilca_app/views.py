@@ -63,3 +63,8 @@ def logout_(request):
 def show_dictionaries(request):
     list_dictionaries = Dictionary.objects.all()
     return HttpResponse(list_dictionaries[0].text_pairs)
+
+
+@csrf_exempt
+def temp_show_lists(request):
+    return render(request, 'Cards.html')
