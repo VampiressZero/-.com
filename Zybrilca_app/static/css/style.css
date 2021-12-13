@@ -17,7 +17,7 @@ div, p, input, button, form, span, a, ul, li {
 header{
     font-size: 15px;
     font-family: 'Rowdies', cursive;
-    background: url('./head.png') repeat-x center;
+    background: url('../img/head.png') repeat-x center;
     height: 140px;
     margin-bottom: 50px;
 }
