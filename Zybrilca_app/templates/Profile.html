@@ -1,17 +1,16 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block content %}
     <div class="base">
         <div class="contentCenter">
-            <img class="profile" src="img/profilephoto.jpg"/>
+            <img class="profile" src="{% static 'img/Profilephoto.jpg' %}"/>
             <div>
                 <p>Логин: {{ request.user.username }}</p>
                 <p>Списки: </p>
                 {% for dict in list_dictionaries_self %}
-                <a href="{% url 'Zybrilca_app:dictionary_testing' dict.id %}">{{ dict }}</a>
+                <a href="{% url 'Zybrilca_app:dictionary_testing' dict.id %}">{{ dict }}</a><br />
                 {% endfor %}
-                
-                <p>Добавленные списки: список 3, список 4</p>
             </div>
         </div>
         <div class="ListProfile">

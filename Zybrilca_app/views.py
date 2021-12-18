@@ -109,9 +109,22 @@ def dictionary_testing(request, dict_id):
     if request.user.is_authenticated:
         dictionary = Dictionary.objects.get(pk=dict_id)
         wordpairs_list = dictionary.wordpair_set.all()
+        count = wordpairs_list.count
+        if request.method == "GET":
+            request.session["wordIndex"] = 0
+            request.session["result"] = 0
+        if request.method == "POST":
+            word1 = wordpairs_list[request.session["wordIndex"]].word_translation
+            word2 = request.POST.get('userWord')
+            if word1 == word2:
+                request.session["result"] += 1
+            request.session["wordIndex"] += 1
         context = {
             'dictionary': dictionary,
             'wordpairs_list': wordpairs_list,
+            'result': request.session["result"],
+            'count': count,
+            'wordIndex' : request.session["wordIndex"],
         }
         return render(request, 'Cards.html', context)
 
@@ -149,6 +162,7 @@ def remove_dictionary(request):
             remove_dict.is_removed = True
             remove_dict.save()
     return redirect('Zybrilca_app:profile')
+
 
 @csrf_exempt
 def edit_word(request, dict_id, wordpair_id):
