@@ -10,5 +10,7 @@ urlpatterns = [
     path('dictionary_testing/<int:dict_id>/', views.dictionary_testing, name='dictionary_testing'),
     path('profile/', views.profile, name="profile"),
     path('edit_dictionary/<int:dict_id>/', views.edit_dictionary, name="edit_dictionary"),
+    path('edit_dictionary/<int:dict_id>/<int:word_id>/', views.edit_dictionary, name="edit_dictionary"),
+    path('edit_word/<int:dict_id>/<int:wordpair_id>/', views.edit_word, name="edit_word"),
     path('remove_dictionary/', views.remove_dictionary, name='remove_dictionary'),
 ]

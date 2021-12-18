@@ -77,6 +77,7 @@ def create_dictionary(request):
     if request.user.is_authenticated:
         new_dictionary_form = DictionaryForm(request.POST)
         new_dictionary = Dictionary()
+        edit_word_pair_form = WordPairForm()
         new_wordpair = WordPair()
         new_wordpair_form = WordPairForm(request.POST)
         list_pairs_forms = list()
@@ -108,9 +109,22 @@ def dictionary_testing(request, dict_id):
     if request.user.is_authenticated:
         dictionary = Dictionary.objects.get(pk=dict_id)
         wordpairs_list = dictionary.wordpair_set.all()
+        count = wordpairs_list.count
+        if request.method == "GET":
+            request.session["wordIndex"] = 0
+            request.session["result"] = 0
+        if request.method == "POST":
+            word1 = wordpairs_list[request.session["wordIndex"]].word_translation
+            word2 = request.POST.get('userWord')
+            if word1 == word2:
+                request.session["result"] += 1
+            request.session["wordIndex"] += 1
         context = {
             'dictionary': dictionary,
             'wordpairs_list': wordpairs_list,
+            'result': request.session["result"],
+            'count': count,
+            'wordIndex' : request.session["wordIndex"],
         }
         return render(request, 'Cards.html', context)
 
@@ -120,6 +134,7 @@ def profile(request):
     if request.user.is_authenticated:
         list_dictionaries = request.user.dictionary_set.all()
         list_dictionaries_self = Dictionary.objects.filter(Q(is_removed=False) & Q(user_created=request.user))
+        word = Dictionary()
         context = {
             'list_dictionaries': list_dictionaries,
             'list_dictionaries_self': list_dictionaries_self,
@@ -128,14 +143,16 @@ def profile(request):
 
 
 @csrf_exempt
-def edit_dictionary(request, dict_id, slice=1):
+def edit_dictionary(request, dict_id, word_id = ''):
     dictionary = Dictionary.objects.get(pk=dict_id)
     wordList = dictionary.wordpair_set.all()
-
-    # current_word = dictionary.wordpair_set.all|slice:word_numbers
+    currentWord = WordPair()
+    if word_id != '':
+        currentWord = WordPair.objects.get(pk=word_id)
     context = {
         'dictionary': dictionary,
-        'wordList': wordList
+        'wordList': wordList,
+        'currentWord' : currentWord
     }
     return render(request, 'Lists_main.html', context)
 
@@ -152,12 +169,5 @@ def remove_dictionary(request):
 
 
 @csrf_exempt
-def change_word(request, dict_id, word_id):
-    dictionary = Dictionary.objects.get(pk=dict_id)
-    i = 1
-    wordList = dictionary.wordpair_set.all()
-    for word in wordList:
-        i =+ 1
-        if word.id == word_id:
-            break
-    return redirect('edit_dictionary', dict_id, i)
+def edit_word(request, dict_id, wordpair_id):
+    return HttpResponse("sas")

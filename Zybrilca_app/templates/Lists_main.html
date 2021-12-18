@@ -5,18 +5,19 @@
     <div class="base">
             <form action="" method="post">
                 <div class="listblockSearch">
-                <!--<input type="text" name="input_title_dictionary" placeholder="Введите название словаря">-->
+                <input type="text" name="input_title_dictionary" placeholder="Введите название словаря">
                 </div>
                 <div class="grid">                         
                     <div>
                         {% for word in wordList %}
-                            <p>{{ word.word }}</p>
+                        <!--<a href="{{ word.id }}"><p>{{ word.word }}</p></a>-->
+                        <a href="{% url 'Zybrilca_app:edit_dictionary' dictionary.id word.id %}"><p>{{ word.word }}</p></a>
                         {% endfor %}
                     </div>
-                {% for word in wordList|slice:slice %}
-                <textarea class="editField" name="" id="">{{ word.word }}</textarea>
-                <textarea class="editField" name="" id="">{{ word.word_translation }}</textarea>
-                {% endfor %}
+
+                <textarea class="editField" name="" id="">{{ currentWord.word }}</textarea>
+                <textarea class="editField" name="" id="">{{ currentWord.word_translation }}</textarea>
+
                 </div>
                 <button class="listbutton">Добавить</button>
                 <button class="listbutton">Удалить</button>

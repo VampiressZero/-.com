@@ -8,11 +8,17 @@
             <p>{{ word.word }}</p>
             {% endfor %}
         </div>
-        <div class="enterWord">
-            <textarea name="" id="">Cucumber</textarea>
-            <button>Ввод</button>
-        </div>
-        
+        <form method="post">
+            <div class="enterWord">
+                <textarea name="userWord" id="userWord"></textarea>
+                <button type="submit">Ввод</button>
+            </div>
+        </form>
+        {% if wordIndex == count %}
+        <p>Тест завершен!</p>
+        <p>Ваш результат: {{ result }}/{{ count }}</p>
+        <a href="{% url 'Zybrilca_app:profile' %}">Вернуться в профиль</a>
+        {% endif %}
         <!-- <div class="row">
         <div class="col-2-3">
             <input type="text"> 
