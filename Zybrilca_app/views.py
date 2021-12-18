@@ -1,14 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from .models import *
+from .forms import *
+from django.db.models import Q
 
 
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
+
 
 @csrf_exempt
 def reg(request):
@@ -32,6 +35,7 @@ def reg(request):
         return render(request, 'reg.html', locals())
     return render(request, 'reg.html', locals())
 
+
 @csrf_exempt
 def login_(request):
     if request.user.is_authenticated:
@@ -50,7 +54,102 @@ def login_(request):
         error = "Неверный логин или пароль"
         return render(request, 'index.html', locals())
 
+
 @csrf_exempt
 def logout_(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+
+@csrf_exempt
+def show_dictionaries(request):
+    list_dictionaries = Dictionary.objects.all()
+    return HttpResponse(list_dictionaries[0].text_pairs)
+
+
+@csrf_exempt
+def temp_show_lists(request):
+    return render(request, 'Cards.html')
+
+
+@csrf_exempt
+def create_dictionary(request):
+    if request.user.is_authenticated:
+        new_dictionary_form = DictionaryForm(request.POST)
+        new_dictionary = Dictionary()
+        edit_word_pair_form = WordPairForm()
+        new_wordpair = WordPair()
+        new_wordpair_form = WordPairForm(request.POST)
+        list_pairs_forms = list()
+        list_pairs_forms.append(new_wordpair_form)
+        if request.method == 'POST':
+            if new_dictionary_form.is_valid() & new_wordpair_form.is_valid():
+                new_dictionary.dict_name = new_dictionary_form.cleaned_data.get('dict_name')
+                new_dictionary.description = new_dictionary_form.cleaned_data.get('description')
+                new_dictionary.user_created = request.user
+                new_wordpair.word = new_wordpair_form.cleaned_data.get('word')
+                new_wordpair.word_translation = new_wordpair_form.cleaned_data.get('word_translation')
+                new_wordpair.dictionary_parent = new_dictionary
+                new_dictionary.save()
+                new_wordpair.save()
+                return redirect('Zybrilca_app:profile')
+            else:
+                return HttpResponse("Форма Недействительна!")
+        context = {
+            'new_dictionary_form': new_dictionary_form,
+            'new_wordpair_form': new_wordpair_form,
+            'list_pairs_forms': list_pairs_forms,
+        }
+
+    return render(request, 'ilya_test_forms.html', context)
+
+
+@csrf_exempt
+def dictionary_testing(request, dict_id):
+    if request.user.is_authenticated:
+        dictionary = Dictionary.objects.get(pk=dict_id)
+        wordpairs_list = dictionary.wordpair_set.all()
+        context = {
+            'dictionary': dictionary,
+            'wordpairs_list': wordpairs_list,
+        }
+        return render(request, 'Cards.html', context)
+
+
+@csrf_exempt
+def profile(request):
+    if request.user.is_authenticated:
+        list_dictionaries = request.user.dictionary_set.all()
+        list_dictionaries_self = Dictionary.objects.filter(Q(is_removed=False) & Q(user_created=request.user))
+        word = Dictionary()
+        context = {
+            'list_dictionaries': list_dictionaries,
+            'list_dictionaries_self': list_dictionaries_self,
+        }
+        return render(request, 'Profile.html', context)
+
+
+@csrf_exempt
+def edit_dictionary(request, dict_id):
+    dictionary = Dictionary.objects.get(pk=dict_id)
+    wordList = dictionary.wordpair_set.all()
+    context = {
+        'dictionary': dictionary,
+        'wordList': wordList
+    }
+    return render(request, 'Lists_main.html', context)
+
+
+@csrf_exempt
+def remove_dictionary(request):
+    if request.method == 'POST':
+        choices = request.POST.getlist('choice')
+        for choice in choices:
+            remove_dict = Dictionary.objects.get(pk=choice)
+            remove_dict.is_removed = True
+            remove_dict.save()
+    return redirect('Zybrilca_app:profile')
+
+@csrf_exempt
+def edit_word(request, dict_id, wordpair_id):
+    return HttpResponse("sas")

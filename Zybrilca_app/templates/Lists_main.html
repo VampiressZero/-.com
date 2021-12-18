@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="base">
+            <form action="" method="post">
+                <div class="listblockSearch">
+                <input type="text" name="input_title_dictionary" placeholder="Введите название словаря">
+                </div>
+                <div class="grid">                         
+                    <div>
+                        {% for word in wordList %}
+                        {% comment %}<a href="{% url 'Zybrilca_app:edit_word' dict_id word.id %}"><p>{{ word.word }}</p></a> {% endcomment %}
+                        {% endfor %}
+                    </div>
+
+                <textarea class="editField" name="" id="">Ли Юэ</textarea>
+                <textarea class="editField" name="" id="">Какой-то текст для объяснения/перевода</textarea>
+
+                </div>
+                <button class="listbutton">Добавить</button>
+                <button class="listbutton">Удалить</button>
+                <button class="listbutton">Сохранить</button>
+            </form>
+    </div>
+{% endblock content %}

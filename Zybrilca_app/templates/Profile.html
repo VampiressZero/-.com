@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="base">
+        <div class="contentCenter">
+            <img class="profile" src="img/profilephoto.jpg"/>
+            <div>
+                <p>Логин: {{ request.user.username }}</p>
+                <p>Списки: </p>
+                {% for dict in list_dictionaries_self %}
+                <a href="{% url 'Zybrilca_app:dictionary_testing' dict.id %}">{{ dict }}</a>
+                {% endfor %}
+                
+                <p>Добавленные списки: список 3, список 4</p>
+            </div>
+        </div>
+        <div class="ListProfile">
+            <div class="labelblock">
+                <p>Добавить список</p>
+            </div>
+                <div class="listblockSearch">
+                    <input type="text" name="" id="" placeholder="Введите id списка, который хотите добавить">
+                    <button>Найти</button>
+                </div>
+                <form action="">
+                    <div class="listblockSearch">
+                        <input type="text" name="create_placeholder" id="" placeholder="Введите название нового списка">
+                        <button type="button" onclick="location.href={% url 'Zybrilca_app:create_dictionary' %}">Создать новый словарь</button>
+
+
+                    </div>
+                </form>
+
+
+            <div class="labelblock">
+                <p>Редактировать списки</p>
+                {% for dict in list_dictionaries_self %}
+                <a href="{% url 'Zybrilca_app:edit_dictionary' dict.id %}"><p>{{ dict }}</p></a>
+                {% endfor %}
+            </div>
+                <!-- <div class="listblock">
+                </div>
+                <div class="listblock">
+                </div>
+                <div class="listblock">
+                </div> -->
+
+                
+                <div class="labelblock">
+                    <p>Удалить список (списки)</p>
+                    <form action="{% url 'Zybrilca_app:remove_dictionary' %}" method="post">
+                        {% for dict in list_dictionaries_self %}
+                        <p><input type="checkbox" name="choice" value="{{ dict.id }}"> {{ dict }}</p>
+                        {% endfor %}
+                        <button class="ListButtomDelete" type="submit">Удалить</button>
+                    </form>
+                </div>
+                    <!-- <div class="listblock">
+                    </div>
+                    <div class="listblock">
+                    </div> -->
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="base"> 
+        <div class="testcontent">
+            {% for word in wordpairs_list %}
+            <p>{{ word.word }}</p>
+            {% endfor %}
+        </div>
+        <div class="enterWord">
+            <textarea name="" id="">Cucumber</textarea>
+            <button>Ввод</button>
+        </div>
+        
+        <!-- <div class="row">
+        <div class="col-2-3">
+            <input type="text"> 
+        </div>
+        <div class="col-1-3">
+            <a href="#">Ввод</a>
+        </div>
+    </div> -->
+        
+        
+    </div>
+{% endblock content %}
