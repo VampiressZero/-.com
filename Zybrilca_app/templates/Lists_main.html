@@ -10,12 +10,13 @@
                 <div class="grid">                         
                     <div>
                         {% for word in wordList %}
-                        {% comment %}<a href="{% url 'Zybrilca_app:edit_word' dict_id word.id %}"><p>{{ word.word }}</p></a> {% endcomment %}
+                        <!--<a href="{{ word.id }}"><p>{{ word.word }}</p></a>-->
+                        <a href="{% url 'Zybrilca_app:edit_dictionary' dictionary.id word.id %}"><p>{{ word.word }}</p></a>
                         {% endfor %}
                     </div>
 
-                <textarea class="editField" name="" id="">Ли Юэ</textarea>
-                <textarea class="editField" name="" id="">Какой-то текст для объяснения/перевода</textarea>
+                <textarea class="editField" name="" id="">{{ currentWord.word }}</textarea>
+                <textarea class="editField" name="" id="">{{ currentWord.word_translation }}</textarea>
 
                 </div>
                 <button class="listbutton">Добавить</button>

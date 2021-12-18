@@ -143,12 +143,16 @@ def profile(request):
 
 
 @csrf_exempt
-def edit_dictionary(request, dict_id):
+def edit_dictionary(request, dict_id, word_id = ''):
     dictionary = Dictionary.objects.get(pk=dict_id)
     wordList = dictionary.wordpair_set.all()
+    currentWord = WordPair()
+    if word_id != '':
+        currentWord = WordPair.objects.get(pk=word_id)
     context = {
         'dictionary': dictionary,
-        'wordList': wordList
+        'wordList': wordList,
+        'currentWord' : currentWord
     }
     return render(request, 'Lists_main.html', context)
 
