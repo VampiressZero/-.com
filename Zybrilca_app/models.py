@@ -13,6 +13,7 @@ class Dictionary(models.Model):
     pub_date = models.DateTimeField('Дата публикации', auto_now_add=True)
     description = models.TextField('Краткое описание словаря')
     user_created = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_removed = models.BooleanField('Пометка удаления', default=False)
 
     def __str__(self):
         return self.dict_name

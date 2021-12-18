@@ -16,7 +16,7 @@
             <a class="logo" href="{% url 'Zybrilca_app:index_url' %}">Зубрилка.com</a>
             <div class="regDivHeader">
                 {% if user.is_authenticated %}
-                Добро пожаловать, {{user.username}}
+                    Добро пожаловать, <a href ="{% url 'Zybrilca_app:profile' %}">{{user.username}}</a>
                 <br><a href="{% url 'logout_url' %}">Выйти</a>
                 {% else %}
                     <form method="post" action="{% url 'login_url' %}">

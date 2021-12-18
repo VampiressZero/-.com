@@ -5,6 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from .models import *
 from .forms import *
+from django.db.models import Q
 
 
 # Create your views here.
@@ -76,6 +77,7 @@ def create_dictionary(request):
     if request.user.is_authenticated:
         new_dictionary_form = DictionaryForm(request.POST)
         new_dictionary = Dictionary()
+        edit_word_pair_form = WordPairForm()
         new_wordpair = WordPair()
         new_wordpair_form = WordPairForm(request.POST)
         list_pairs_forms = list()
@@ -90,7 +92,7 @@ def create_dictionary(request):
                 new_wordpair.dictionary_parent = new_dictionary
                 new_dictionary.save()
                 new_wordpair.save()
-                return HttpResponse("Вы молодцы!")
+                return redirect('Zybrilca_app:profile')
             else:
                 return HttpResponse("Форма Недействительна!")
         context = {
@@ -99,15 +101,17 @@ def create_dictionary(request):
             'list_pairs_forms': list_pairs_forms,
         }
 
-    return render(request, 'Lists_main.html', context)
+    return render(request, 'ilya_test_forms.html', context)
 
 
 @csrf_exempt
-def dictionary_testing(request):
+def dictionary_testing(request, dict_id):
     if request.user.is_authenticated:
-        dictionary = Dictionary.objects.get(pk=2)
+        dictionary = Dictionary.objects.get(pk=dict_id)
+        wordpairs_list = dictionary.wordpair_set.all()
         context = {
             'dictionary': dictionary,
+            'wordpairs_list': wordpairs_list,
         }
         return render(request, 'Cards.html', context)
 
@@ -116,8 +120,11 @@ def dictionary_testing(request):
 def profile(request):
     if request.user.is_authenticated:
         list_dictionaries = request.user.dictionary_set.all()
+        list_dictionaries_self = Dictionary.objects.filter(Q(is_removed=False) & Q(user_created=request.user))
+        word = Dictionary()
         context = {
             'list_dictionaries': list_dictionaries,
+            'list_dictionaries_self': list_dictionaries_self,
         }
         return render(request, 'Profile.html', context)
 
@@ -125,4 +132,24 @@ def profile(request):
 @csrf_exempt
 def edit_dictionary(request, dict_id):
     dictionary = Dictionary.objects.get(pk=dict_id)
-    return HttpResponse("Вы редактируете список {}".format(dictionary))
+    wordList = dictionary.wordpair_set.all()
+    context = {
+        'dictionary': dictionary,
+        'wordList': wordList
+    }
+    return render(request, 'Lists_main.html', context)
+
+
+@csrf_exempt
+def remove_dictionary(request):
+    if request.method == 'POST':
+        choices = request.POST.getlist('choice')
+        for choice in choices:
+            remove_dict = Dictionary.objects.get(pk=choice)
+            remove_dict.is_removed = True
+            remove_dict.save()
+    return redirect('Zybrilca_app:profile')
+
+@csrf_exempt
+def edit_word(request, dict_id, wordpair_id):
+    return HttpResponse("sas")
