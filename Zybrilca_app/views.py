@@ -77,7 +77,6 @@ def create_dictionary(request):
     if request.user.is_authenticated:
         new_dictionary_form = DictionaryForm(request.POST)
         new_dictionary = Dictionary()
-        edit_word_pair_form = WordPairForm()
         new_wordpair = WordPair()
         new_wordpair_form = WordPairForm(request.POST)
         list_pairs_forms = list()
@@ -121,7 +120,6 @@ def profile(request):
     if request.user.is_authenticated:
         list_dictionaries = request.user.dictionary_set.all()
         list_dictionaries_self = Dictionary.objects.filter(Q(is_removed=False) & Q(user_created=request.user))
-        word = Dictionary()
         context = {
             'list_dictionaries': list_dictionaries,
             'list_dictionaries_self': list_dictionaries_self,
@@ -130,9 +128,11 @@ def profile(request):
 
 
 @csrf_exempt
-def edit_dictionary(request, dict_id):
+def edit_dictionary(request, dict_id, slice=1):
     dictionary = Dictionary.objects.get(pk=dict_id)
     wordList = dictionary.wordpair_set.all()
+
+    # current_word = dictionary.wordpair_set.all|slice:word_numbers
     context = {
         'dictionary': dictionary,
         'wordList': wordList
@@ -150,6 +150,14 @@ def remove_dictionary(request):
             remove_dict.save()
     return redirect('Zybrilca_app:profile')
 
+
 @csrf_exempt
-def edit_word(request, dict_id, wordpair_id):
-    return HttpResponse("sas")
+def change_word(request, dict_id, word_id):
+    dictionary = Dictionary.objects.get(pk=dict_id)
+    i = 1
+    wordList = dictionary.wordpair_set.all()
+    for word in wordList:
+        i =+ 1
+        if word.id == word_id:
+            break
+    return redirect('edit_dictionary', dict_id, i)
