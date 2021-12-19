@@ -4,11 +4,12 @@
 {% block content %}
     <div class="base"> 
         <div class="testcontent">
-            {% for word in wordpairs_list %}
-            <p>{{ word.word }}</p>
-            {% endfor %}
+            {% if prevWord != ''  %}
+            <p>{{ prevWord.word }} Ваш ответ: {{ userWord }} Правильный ответ: {{ prevWord.word_translation }} {{ answer }}</p>
+            {% endif %}
+            <p>{{ testWord.word }}</p>
         </div>
-        <form method="post">
+        <form method="post" >
             <div class="enterWord">
                 <textarea name="userWord" id="userWord"></textarea>
                 <button type="submit">Ввод</button>

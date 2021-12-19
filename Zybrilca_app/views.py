@@ -109,7 +109,8 @@ def dictionary_testing(request, dict_id):
     if request.user.is_authenticated:
         dictionary = Dictionary.objects.get(pk=dict_id)
         wordpairs_list = dictionary.wordpair_set.all()
-        count = wordpairs_list.count
+        count = wordpairs_list.count()
+        answer = ''
         if request.method == "GET":
             request.session["wordIndex"] = 0
             request.session["result"] = 0
@@ -118,13 +119,29 @@ def dictionary_testing(request, dict_id):
             word2 = request.POST.get('userWord')
             if word1 == word2:
                 request.session["result"] += 1
-            request.session["wordIndex"] += 1
+                answer = "Правильно"
+            else:
+                answer = "Неправильно"
+            if request.session["wordIndex"] != count:
+                request.session["wordIndex"] += 1
+        if request.session["wordIndex"] != count:
+            testWord = wordpairs_list[request.session["wordIndex"]]
+        else:
+            testWord = ''
+        if request.session["wordIndex"] == 0:
+            prevWord = ''
+        else:
+            prevWord = wordpairs_list[request.session["wordIndex"] - 1]
         context = {
             'dictionary': dictionary,
             'wordpairs_list': wordpairs_list,
             'result': request.session["result"],
             'count': count,
+            'testWord' : testWord,
+            'prevWord' : prevWord,
             'wordIndex' : request.session["wordIndex"],
+            'answer' : answer,
+            'userWord' : request.POST.get('userWord')
         }
         return render(request, 'Cards.html', context)
 
