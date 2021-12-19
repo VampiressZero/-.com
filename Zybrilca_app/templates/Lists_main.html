@@ -3,12 +3,13 @@
 
 {% block content %}
     <div class="base">
+
             <form action="">
                 <div class="listblockSearch">
                 <h1>{{ dictionary }}</h1>
 
                 </div>
-            <p></p>
+
                 <div class="grid">                         
                     <div>
                         {% for word in wordList %}
@@ -35,5 +36,6 @@
             </form>
                 {% endif %}
     {% endif %}
+
     </div>
 {% endblock content %}
