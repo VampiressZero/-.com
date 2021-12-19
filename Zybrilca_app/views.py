@@ -77,7 +77,6 @@ def create_dictionary(request):
     if request.user.is_authenticated:
         new_dictionary_form = DictionaryForm(request.POST)
         new_dictionary = Dictionary()
-        edit_word_pair_form = WordPairForm()
         new_wordpair = WordPair()
         new_wordpair_form = WordPairForm(request.POST)
         list_pairs_forms = list()
@@ -171,3 +170,42 @@ def remove_dictionary(request):
 @csrf_exempt
 def edit_word(request, dict_id, wordpair_id):
     return HttpResponse("sas")
+
+
+@csrf_exempt
+def add_word(request, dict_id):
+    if request.user.is_authenticated:
+        dictionary = Dictionary.objects.get(pk=dict_id)
+        new_wordpair_form = WordPairForm(request.POST)
+        new_wordpair = WordPair()
+        if request.method == 'POST':
+            if new_wordpair_form.is_valid():
+                new_wordpair.word = new_wordpair_form.cleaned_data.get('word')
+                new_wordpair.word_translation = new_wordpair_form.cleaned_data.get('word_translation')
+                new_wordpair.dictionary_parent = dictionary
+                new_wordpair.save()
+                return redirect('Zybrilca_app:edit_dictionary', dictionary.id)
+            else:
+                return HttpResponse("Форма Недействительна!")
+
+        context = {
+            'new_wordpair_form': new_wordpair_form,
+            'dictionary': dictionary
+        }
+        return render(request, 'add_word.html', context)
+    else:
+        return HttpResponse('Зарегистрируйся, дружок-пирожок!')
+
+
+@csrf_exempt
+def remove_wordpair(request, dict_id, wordpair_id):
+    dictionary = Dictionary.objects.get(pk=dict_id)
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            word_on_remove = WordPair.objects.get(pk=wordpair_id)
+            word_on_remove.delete()
+            return redirect('Zybrilca_app:edit_dictionary', dictionary.id)
+    else:
+        return HttpResponse('А авторизироваться кто будет?')
+
+

@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Введите новое слово</h1>
+<form action="" method="post">
+<p>{{ new_wordpair_form.as_p }}</p>
+<button type="submit">Добавить слово</button>
+</form>
+{% endblock %}

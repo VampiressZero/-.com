@@ -3,10 +3,12 @@
 
 {% block content %}
     <div class="base">
-            <form action="" method="post">
+            <form action="">
                 <div class="listblockSearch">
-                <input type="text" name="input_title_dictionary" placeholder="Введите название словаря">
+                <h1>{{ dictionary }}</h1>
+
                 </div>
+            <p></p>
                 <div class="grid">                         
                     <div>
                         {% for word in wordList %}
@@ -19,9 +21,19 @@
                 <textarea class="editField" name="" id="">{{ currentWord.word_translation }}</textarea>
 
                 </div>
-                <button class="listbutton">Добавить</button>
-                <button class="listbutton">Удалить</button>
-                <button class="listbutton">Сохранить</button>
+
             </form>
+        {% if user.is_authenticated %}
+        <form action="{% url 'Zybrilca_app:add_word' dictionary.id %}">
+                <button class="listbutton" onclick="location.href={% url 'Zybrilca_app:add_word' dictionary.id %}">Добавить</button>
+
+                <button class="listbutton">Сохранить</button>
+        </form>
+            {% if currentWord.id != None %}
+            <form action="{% url 'Zybrilca_app:remove_wordpair' dictionary.id currentWord.id %}" method="post">
+                <button class="listbutton" type="submit">Удалить</button>
+            </form>
+                {% endif %}
+    {% endif %}
     </div>
 {% endblock content %}
