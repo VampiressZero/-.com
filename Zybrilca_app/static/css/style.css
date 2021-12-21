@@ -319,7 +319,7 @@ header{
 
 .divReg{
     width: 432px;
-    background: url('img/regWindow.png'), rgba(255,255,255,0.8);
+    background: url('../img/regWindow.png'), rgba(255,255,255,0.8);
     height: 471px;
     background-blend-mode: color;
 	margin:auto;
