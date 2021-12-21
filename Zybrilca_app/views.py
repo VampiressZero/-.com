@@ -112,13 +112,15 @@ def dictionary_testing(request, dict_id):
         wordpairs_list = dictionary.wordpair_set.all()
         count = wordpairs_list.count()
         answer = ''
+        testList = []
         if request.method == "GET":
             request.session["wordIndex"] = 0
             request.session["result"] = 0
+            request.session["testIds"] = []
         if request.method == "POST":
             word1 = wordpairs_list[request.session["wordIndex"]].word_translation
             word2 = request.POST.get('userWord')
-            if word1 == word2:
+            if word1.lower() == word2.lower():
                 request.session["result"] += 1
                 answer = "Правильно"
             else:
@@ -127,23 +129,27 @@ def dictionary_testing(request, dict_id):
                 request.session["wordIndex"] += 1
         if request.session["wordIndex"] != count:
             testWord = wordpairs_list[request.session["wordIndex"]]
+            request.session["testIds"].append(testWord.id)
         else:
             testWord = ''
+            for w in request.session["testIds"]:
+                testList.append(WordPair.objects.get(pk=w))
         if request.session["wordIndex"] == 0:
             prevWord = ''
         else:
             prevWord = wordpairs_list[request.session["wordIndex"] - 1]
+
         context = {
             'dictionary': dictionary,
             'wordpairs_list': wordpairs_list,
             'result': request.session["result"],
             'count': count,
-
-            'testWord' : testWord,
-            'prevWord' : prevWord,
-            'wordIndex' : request.session["wordIndex"],
-            'answer' : answer,
-            'userWord' : request.POST.get('userWord')
+            'testWord': testWord,
+            'prevWord': prevWord,
+            'wordIndex': request.session["wordIndex"],
+            'answer': answer,
+            'userWord': request.POST.get('userWord'),
+            'testList': testList
         }
         return render(request, 'Cards.html', context)
 
