@@ -1,11 +1,16 @@
+from io import StringIO
+
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
+
 from .models import *
 from .forms import *
 from django.db.models import Q
+from wsgiref.util import FileWrapper
+
 
 
 # Create your views here.
@@ -226,5 +231,17 @@ def remove_wordpair(request, dict_id, wordpair_id):
     else:
         return HttpResponse('А авторизироваться кто будет?')
 
+
+def refactor_dict_to_txt(dictionary):
+    edited_wordpairs = ""
+    list_wordpairs = dictionary.wordpair_set.all()
+    for wordpair in list_wordpairs:
+        edited_wordpairs += wordpair.word + ", " + wordpair.word_translation + "\n"
+    return edited_wordpairs
+
+def download_dictionary(request, dict_id):
+    dict_on_download = Dictionary.objects.get(pk=dict_id)
+    file = refactor_dict_to_txt(dict_on_download)
+    return HttpResponse(open('dict.txt', 'w+'))
 
 

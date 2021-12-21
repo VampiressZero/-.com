@@ -15,5 +15,6 @@ urlpatterns = [
     path('edit_word/<int:dict_id>/<int:wordpair_id>/', views.edit_word, name="edit_word"),
     path('remove_dictionary/', views.remove_dictionary, name='remove_dictionary'),
     path('remove_wordpair/<int:dict_id>/<int:wordpair_id>/', views.remove_wordpair, name="remove_wordpair"),
+    path('download_dictionary/<int:dict_id>/', views.download_dictionary, name='download_dictionary')
 
 ]
