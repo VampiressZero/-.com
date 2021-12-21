@@ -4,6 +4,7 @@
 {% block content %}
     <div class="base"> 
         <div class="testcontent">
+
             {% if prevWord != ''  %}
             <p>{{ prevWord.word }} Ваш ответ: {{ userWord }} Правильный ответ: {{ prevWord.word_translation }} {{ answer }}</p>
             {% endif %}

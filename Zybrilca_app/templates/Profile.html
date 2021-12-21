@@ -9,7 +9,8 @@
                 <p>Логин: {{ request.user.username }}</p>
                 <p>Списки: </p>
                 {% for dict in list_dictionaries_self %}
-                <a href="{% url 'Zybrilca_app:dictionary_testing' dict.id %}">{{ dict }}</a><br />
+                <a href="{% url 'Zybrilca_app:dictionary_testing' dict.id %}">{{ dict }}</a>
+                    <a href="{% url 'Zybrilca_app:download_dictionary' dict.id %}">Скачать словарь</a><br />
                 {% endfor %}
             </div>
         </div>
