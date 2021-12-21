@@ -353,3 +353,40 @@ header{
     color: #fff;
 }    
 
+
+.addCard_word{
+    width: 60%;
+    margin: 0px auto;
+}
+
+.addCard_word p{
+    padding: 0px;
+    margin: 0px;
+}
+.addCard_word>form{
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 15px;
+}
+
+.addCard_word textarea{
+    padding: 10px 10px;
+    outline:none;
+    resize: none;
+    height: 50px;
+}
+
+.addCard_word input{
+    padding: 5px 10px;
+}
+
+.addCard_word button{
+    
+    background: #C4C4C4;
+    font-size: 15px;
+    display: block;
+    margin: auto;
+    padding: 7px 15px;
+    font-size: 18px;
+    border: black solid 0px;
+}
