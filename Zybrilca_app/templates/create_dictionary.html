@@ -1,23 +1,23 @@
 {% extends 'layout.html' %}
-{% load static %}
+
 
 {% block content %}
     <div class="base">
         <div class="addCard_word">
-                <h2>Введите новое слово</h2>
-            <form action="{% url 'Zybrilca_app:add_word' dictionary.id %}" method="post">
+            <form action="" method="post">
+                <p>Название словаря</p>
+                {{ new_dictionary_form.dict_name }}
+                <p>Краткое описание словаря</p>
+                {{ new_dictionary_form.description }}
                 <p>Переводимое слово</p>
                 {{ new_wordpair_form.word }}
-                <!--<input type="text" name="" id="">-->
                 <p>Перевод</p>
-                <!--<input type="text" name="" id="">-->
                 {{ new_wordpair_form.word_translation }}
                 <p></p>
-                <button type="submit">Добавить слово</button>
+                <button type="submit">Создать словарь</button>
             </form>
         </div>
 
     </div>
-{% endblock %}
-
+{% endblock content %}
 

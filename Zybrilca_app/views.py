@@ -84,8 +84,6 @@ def create_dictionary(request):
         new_dictionary = Dictionary()
         new_wordpair = WordPair()
         new_wordpair_form = WordPairForm(request.POST)
-        list_pairs_forms = list()
-        list_pairs_forms.append(new_wordpair_form)
         if request.method == 'POST':
             if new_dictionary_form.is_valid() & new_wordpair_form.is_valid():
                 new_dictionary.dict_name = new_dictionary_form.cleaned_data.get('dict_name')
@@ -102,10 +100,9 @@ def create_dictionary(request):
         context = {
             'new_dictionary_form': new_dictionary_form,
             'new_wordpair_form': new_wordpair_form,
-            'list_pairs_forms': list_pairs_forms,
         }
 
-    return render(request, 'ilya_test_forms.html', context)
+    return render(request, 'create_dictionary.html', context)
 
 
 @csrf_exempt
