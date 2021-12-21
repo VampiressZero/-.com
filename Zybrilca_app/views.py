@@ -37,7 +37,10 @@ def reg(request):
                 error = "Пользователь с такой почтой уже существует"
                 return render(request, 'reg.html', locals())
         user = User.objects.create_user(username=username, password=password, email=email)
-        return render(request, 'reg.html', locals())
+        user_au = authenticate(username=username, password=password)
+        if user_au.is_active:
+            login(request, user)
+        return redirect('Zybrilca_app:profile')
     return render(request, 'reg.html', locals())
 
 
@@ -84,6 +87,8 @@ def create_dictionary(request):
         new_dictionary = Dictionary()
         new_wordpair = WordPair()
         new_wordpair_form = WordPairForm(request.POST)
+        list_pairs_forms = list()
+        list_pairs_forms.append(new_wordpair_form)
         if request.method == 'POST':
             if new_dictionary_form.is_valid() & new_wordpair_form.is_valid():
                 new_dictionary.dict_name = new_dictionary_form.cleaned_data.get('dict_name')
@@ -100,6 +105,7 @@ def create_dictionary(request):
         context = {
             'new_dictionary_form': new_dictionary_form,
             'new_wordpair_form': new_wordpair_form,
+            'list_pairs_forms': list_pairs_forms,
         }
 
     return render(request, 'create_dictionary.html', context)
@@ -144,12 +150,12 @@ def dictionary_testing(request, dict_id):
             'wordpairs_list': wordpairs_list,
             'result': request.session["result"],
             'count': count,
-            'testWord': testWord,
-            'prevWord': prevWord,
-            'wordIndex': request.session["wordIndex"],
-            'answer': answer,
-            'userWord': request.POST.get('userWord'),
-            'testList': testList
+            'testWord' : testWord,
+            'prevWord' : prevWord,
+            'wordIndex' : request.session["wordIndex"],
+            'answer' : answer,
+            'userWord' : request.POST.get('userWord'),
+            'testList' : testList
         }
         return render(request, 'Cards.html', context)
 
@@ -245,6 +251,6 @@ def refactor_dict_to_txt(dictionary):
 def download_dictionary(request, dict_id):
     dict_on_download = Dictionary.objects.get(pk=dict_id)
     file = refactor_dict_to_txt(dict_on_download)
-    return HttpResponse(open('dict.txt', 'w+'))
+    return HttpResponse(file)
 
 

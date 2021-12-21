@@ -5,16 +5,28 @@
     <div class="base"> 
         <div class="testcontent">
 
-            {% if prevWord != ''  %}
-            <p>{{ prevWord.word }} Ваш ответ: {{ userWord }} Правильный ответ: {{ prevWord.word_translation }} {{ answer }}</p>
+            {% if wordIndex != count %}
+                {% if prevWord != ''  %}
+                    <p>{{ prevWord.word }} Ваш ответ: {{ userWord }} {{ answer }}</p>
+                {% endif %}
+                <p>{{ testWord.word }}</p>
+            {% else %}
+                {% if prevWord != ''  %}
+                    <p>{{ prevWord.word }} Ваш ответ: {{ userWord }} {{ answer }}</p>
+                {% endif %}
+                <p>Все слова:</p>
+                {% for w in testList %}
+                    <p>{{ w.word }} - {{ w.word_translation }}</p>
+                {% endfor %}
             {% endif %}
-            <p>{{ testWord.word }}</p>
         </div>
         <form method="post" >
+            {% if wordIndex != count %}
             <div class="enterWord">
                 <textarea name="userWord" id="userWord"></textarea>
                 <button type="submit">Ввод</button>
             </div>
+            {% endif %}
         </form>
         {% if wordIndex == count %}
         <p>Тест завершен!</p>

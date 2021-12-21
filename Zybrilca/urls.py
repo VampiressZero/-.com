@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from Zybrilca_app import views
+from django.conf.urls.static import static
+from . import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +26,5 @@ urlpatterns = [
     path('login', views.login_, name="login_url"),
     path('logout', views.logout_, name="logout_url"),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
